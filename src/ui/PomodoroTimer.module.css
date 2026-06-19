@@ -3,74 +3,53 @@
   flex-direction: column;
   align-items: center;
   gap: 1.25rem;
-}
-
-.timer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 2rem;
-  border-radius: 16px;
-  background: var(--surface, #ffffff);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  color: #111;
 }
 
 .phase {
   margin: 0;
-  font-size: 1.25rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: var(--accent, #d24d57);
-}
-
-/* フェーズで差し色を変える（作業=赤系 / 休憩=緑系） */
-.timer[data-phase="shortBreak"] .phase,
-.timer[data-phase="longBreak"] .phase {
-  color: var(--accent-break, #2e8b57);
-}
-
-.time {
-  margin: 0;
-  font-size: 5rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  line-height: 1;
-}
-
-.count {
-  margin: 0;
-  color: var(--muted, #6b7280);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.35em;
+  text-indent: 0.35em;
+  color: #111;
 }
 
 .controls {
   display: flex;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
+  gap: 1.25rem;
+  align-items: baseline;
 }
 
 .controls button {
-  padding: 0.5rem 1.25rem;
-  border: 1px solid var(--border, #d1d5db);
-  border-radius: 8px;
-  background: #fff;
-  font-size: 1rem;
+  background: none;
+  border: none;
+  padding: 0.25rem 0.25rem;
+  font-size: 0.95rem;
+  color: #111;
   cursor: pointer;
 }
 
 .controls button:hover {
-  background: #f3f4f6;
+  opacity: 0.6;
 }
 
 .primary {
-  border-color: transparent;
-  background: var(--accent, #d24d57);
-  color: #fff;
   font-weight: 600;
 }
 
-.primary:hover {
-  filter: brightness(0.95);
-  background: var(--accent, #d24d57);
+.ghost {
+  color: #555 !important;
+}
+
+.settingsToggle {
+  background: none;
+  border: none;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  color: #999;
+  cursor: pointer;
+}
+
+.settingsToggle:hover {
+  color: #111;
 }

@@ -19,6 +19,10 @@ export interface UseTimerResult {
   completedPomodoros: number;
   /** 表示用の残り時間（ms）。running 中は now から算出される。 */
   remainingMs: number;
+  /** 現フェーズの満了時間（ms）。 */
+  totalMs: number;
+  /** 経過割合 0..1（= (totalMs - remainingMs) / totalMs）。アナログ表示用。 */
+  progress: number;
   isRunning: boolean;
   isPaused: boolean;
   isIdle: boolean;
@@ -91,6 +95,8 @@ export function useTimer(
   }, [state.status, settings]);
 
   const remainingMs = core.remainingMsAt(state, now);
+  const totalMs = core.phaseDurationMs(state.phase, settings);
+  const progress = totalMs > 0 ? Math.min(1, Math.max(0, (totalMs - remainingMs) / totalMs)) : 0;
 
   const start = useCallback(() => setState((s) => core.start(s, settings, Date.now())), [settings]);
   const pause = useCallback(() => setState((s) => core.pause(s, Date.now())), []);
@@ -106,6 +112,8 @@ export function useTimer(
     status: state.status,
     completedPomodoros: state.completedPomodoros,
     remainingMs,
+    totalMs,
+    progress,
     isRunning: state.status === "running",
     isPaused: state.status === "paused",
     isIdle: state.status === "idle",
