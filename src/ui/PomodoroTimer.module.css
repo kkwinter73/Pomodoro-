@@ -2,21 +2,24 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.25rem;
-  color: #111;
+  gap: 1.75rem;
+  color: var(--ink, #1c1814);
 }
 
+/* フェーズ名：トラッキングを効かせた小さめの見出し */
 .phase {
   margin: 0;
-  font-size: 0.95rem;
-  letter-spacing: 0.35em;
-  text-indent: 0.35em;
-  color: #111;
+  font-family: var(--font-display, serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.55em;
+  text-indent: 0.55em;
+  color: var(--ink, #1c1814);
 }
 
 .controls {
   display: flex;
-  gap: 1.25rem;
+  gap: 2rem;
   align-items: baseline;
 }
 
@@ -24,10 +27,14 @@
   position: relative;
   background: none;
   border: none;
-  padding: 0.25rem 0.25rem;
-  font-size: 0.95rem;
-  font-family: inherit;
-  color: #111;
+  padding: 0.2rem 0.1rem;
+  font-family: var(--font-ui, sans-serif);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink, #1c1814);
   cursor: pointer;
   transition:
     opacity 0.15s ease,
@@ -52,12 +59,12 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -2px;
+  bottom: -3px;
   height: 1px;
-  background: #111;
+  background: var(--ink, #1c1814);
   transform: scaleX(0);
   transform-origin: center;
-  transition: transform 0.2s ease;
+  transition: transform 0.25s ease;
 }
 
 .primary:hover::after {
@@ -65,18 +72,22 @@
 }
 
 .ghost {
-  color: #555 !important;
+  color: var(--muted, #6f6655) !important;
 }
 
 .settingsToggle {
   background: none;
   border: none;
-  font-size: 0.8rem;
-  letter-spacing: 0.2em;
-  color: #999;
+  font-family: var(--font-ui, sans-serif);
+  font-size: 0.66rem;
+  letter-spacing: 0.32em;
+  text-indent: 0.32em;
+  text-transform: uppercase;
+  color: var(--muted, #6f6655);
   cursor: pointer;
+  transition: color 0.15s ease;
 }
 
 .settingsToggle:hover {
-  color: #111;
+  color: var(--ink, #1c1814);
 }
