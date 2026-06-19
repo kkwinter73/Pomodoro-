@@ -1,0 +1,25 @@
+# dependencies / build
+node_modules/
+dist/
+dist-ssr/
+*.tsbuildinfo
+
+# tooling local cache
+.serena/
+
+# env / secrets（どのレイヤにも秘密情報は書かない / §7-2）
+.env
+.env.*
+!.env.example
+
+# editor / OS
+.DS_Store
+*.local
+
+# harness: 個人override・per-cloneマーカーはコミットしない（§7-2）
+.claude/settings.local.json
+.claude/.lint-*
+
+# logs / coverage
+*.log
+coverage/

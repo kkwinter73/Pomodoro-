@@ -1,0 +1,29 @@
+{
+  "$comment": "チーム共有のハーネス設定（コミットする / §7-2）。個人 override は settings.local.json（gitignore）へ。hook の意図は docs/dev-environment/hooks-guide.md。",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "\"$CLAUDE_PROJECT_DIR/.claude/hooks/branch-guard.sh\"" }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          { "type": "command", "command": "\"$CLAUDE_PROJECT_DIR/.claude/hooks/lint.sh\" post" },
+          { "type": "command", "command": "\"$CLAUDE_PROJECT_DIR/.claude/hooks/decisions-reminder.sh\"" }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "\"$CLAUDE_PROJECT_DIR/.claude/hooks/lint.sh\" stop" }
+        ]
+      }
+    ]
+  }
+}
