@@ -46,6 +46,15 @@ export function useTimer(settings: Settings = DEFAULT_SETTINGS): UseTimerResult 
     saveSettings(settings);
   }, [settings]);
 
+  // 設定変更を idle のタイマー表示に即反映する（running / paused 中は乱さない）
+  useEffect(() => {
+    setState((s) => {
+      if (s.status !== "idle") return s;
+      const dur = core.phaseDurationMs(s.phase, settings);
+      return s.remainingMs === dur ? s : { ...s, remainingMs: dur };
+    });
+  }, [settings]);
+
   // running の間だけインターバルを回す。完了したら次フェーズへ遷移し、
   // running 以外になればクリーンアップで停止する。
   useEffect(() => {

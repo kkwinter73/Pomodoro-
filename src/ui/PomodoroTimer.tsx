@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useTimer, loadSettings, DEFAULT_SETTINGS } from "../timer";
 import type { Phase } from "../timer";
 import { formatTime } from "./formatTime";
+import { SettingsPanel } from "./SettingsPanel";
 import styles from "./PomodoroTimer.module.css";
 
 const PHASE_LABEL: Record<Phase, string> = {
@@ -11,8 +12,8 @@ const PHASE_LABEL: Record<Phase, string> = {
 };
 
 export function PomodoroTimer() {
-  // 永続化された設定を初回に復元する。設定の編集UIは #3 で追加予定。
-  const [settings] = useState(() => loadSettings() ?? DEFAULT_SETTINGS);
+  // 永続化された設定を初回に復元。編集は SettingsPanel から行い、変更は useTimer 経由で保存される。
+  const [settings, setSettings] = useState(() => loadSettings() ?? DEFAULT_SETTINGS);
   const timer = useTimer(settings);
 
   // 主ボタンは状態に応じて 開始 / 一時停止 / 再開 を切り替える
@@ -23,23 +24,27 @@ export function PomodoroTimer() {
       : { label: "開始", onClick: timer.start };
 
   return (
-    <section className={styles.timer} data-phase={timer.phase}>
-      <p className={styles.phase}>{PHASE_LABEL[timer.phase]}</p>
-      <p className={styles.time} role="timer" aria-live="polite">
-        {formatTime(timer.remainingMs)}
-      </p>
-      <p className={styles.count}>完了ポモドーロ: {timer.completedPomodoros}</p>
-      <div className={styles.controls}>
-        <button type="button" className={styles.primary} onClick={primary.onClick}>
-          {primary.label}
-        </button>
-        <button type="button" onClick={timer.reset}>
-          リセット
-        </button>
-        <button type="button" onClick={timer.skip}>
-          スキップ
-        </button>
-      </div>
-    </section>
+    <div className={styles.wrapper}>
+      <section className={styles.timer} data-phase={timer.phase}>
+        <p className={styles.phase}>{PHASE_LABEL[timer.phase]}</p>
+        <p className={styles.time} role="timer" aria-live="polite">
+          {formatTime(timer.remainingMs)}
+        </p>
+        <p className={styles.count}>完了ポモドーロ: {timer.completedPomodoros}</p>
+        <div className={styles.controls}>
+          <button type="button" className={styles.primary} onClick={primary.onClick}>
+            {primary.label}
+          </button>
+          <button type="button" onClick={timer.reset}>
+            リセット
+          </button>
+          <button type="button" onClick={timer.skip}>
+            スキップ
+          </button>
+        </div>
+      </section>
+
+      <SettingsPanel settings={settings} onChange={setSettings} />
+    </div>
   );
 }

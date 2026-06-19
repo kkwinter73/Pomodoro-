@@ -119,3 +119,21 @@ describe("useTimer 永続化（#4）", () => {
     expect(result.current.completedPomodoros).toBe(1);
   });
 });
+
+describe("useTimer 設定変更の反映（#3）", () => {
+  it("idle 中に設定を変えると残り時間が新しい満了値になる", () => {
+    const { result, rerender } = renderHook(({ s }) => useTimer(s), { initialProps: { s: FAST } });
+    expect(result.current.remainingMs).toBe(1 * MIN);
+    act(() => rerender({ s: { ...FAST, workMin: 2 } }));
+    expect(result.current.remainingMs).toBe(2 * MIN);
+  });
+
+  it("running 中の設定変更は現在の残りを乱さない", () => {
+    const { result, rerender } = renderHook(({ s }) => useTimer(s), { initialProps: { s: FAST } });
+    act(() => result.current.start());
+    act(() => vi.advanceTimersByTime(10_000)); // 残り 50s
+    expect(result.current.remainingMs).toBe(50_000);
+    act(() => rerender({ s: { ...FAST, workMin: 2 } }));
+    expect(result.current.remainingMs).toBe(50_000);
+  });
+});

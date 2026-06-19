@@ -72,4 +72,11 @@ describe("PomodoroTimer", () => {
     expect(screen.getByText("小休憩")).toBeInTheDocument();
     expect(screen.getByText("完了ポモドーロ: 1")).toBeInTheDocument();
   });
+
+  it("設定で作業時間を変えると idle 表示に即反映される（#3）", () => {
+    render(<PomodoroTimer />);
+    expect(time()).toBe("25:00");
+    fireEvent.change(screen.getByLabelText("作業 (分)"), { target: { value: "30" } });
+    expect(time()).toBe("30:00");
+  });
 });
