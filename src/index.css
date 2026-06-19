@@ -1,11 +1,10 @@
 :root {
   --surface: #ffffff;
-  --accent: #d24d57;
-  --accent-break: #2e8b57;
-  --muted: #6b7280;
-  --border: #d1d5db;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  color: #1f2937;
+  --ink: #111111;
+  --muted: #666666;
+  --border: #dddddd;
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--ink);
 }
 
 * {
@@ -15,7 +14,7 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: #f4f5f7;
+  background: #ffffff;
 }
 
 .app {
@@ -24,12 +23,5 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
-}
-
-.app h1 {
-  margin: 0;
-  font-size: 1.5rem;
-  color: var(--muted);
-  font-weight: 600;
+  padding: 1.5rem;
 }

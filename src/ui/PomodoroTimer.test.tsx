@@ -14,23 +14,25 @@ afterEach(() => {
   localStorage.clear();
 });
 
-const time = () => screen.getByRole("timer").textContent;
+// 数字表示は出さない設計のため、残り時間は時計の aria-label で確認する
+const remaining = () => screen.getByRole("timer").getAttribute("aria-label");
+const openSettings = () => fireEvent.click(screen.getByRole("button", { name: "設定" }));
 
 describe("PomodoroTimer", () => {
-  it("初期表示は 作業 / 25:00 / 開始ボタン", () => {
+  it("初期表示は 作業 / 残り25:00 / 開始ボタン", () => {
     render(<PomodoroTimer />);
     expect(screen.getByText("作業")).toBeInTheDocument();
-    expect(time()).toBe("25:00");
+    expect(remaining()).toBe("残り 25:00");
     expect(screen.getByRole("button", { name: "開始" })).toBeInTheDocument();
   });
 
-  it("開始すると主ボタンが一時停止になり、時間が経つと表示が減る", () => {
+  it("開始すると主ボタンが一時停止になり、時間が経つと残りが減る", () => {
     render(<PomodoroTimer />);
     fireEvent.click(screen.getByRole("button", { name: "開始" }));
     expect(screen.getByRole("button", { name: "一時停止" })).toBeInTheDocument();
 
     act(() => vi.advanceTimersByTime(5_000));
-    expect(time()).toBe("24:55");
+    expect(remaining()).toBe("残り 24:55");
   });
 
   it("一時停止 → 再開 で計測が止まり再開する", () => {
@@ -40,21 +42,21 @@ describe("PomodoroTimer", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "一時停止" }));
     act(() => vi.advanceTimersByTime(10_000)); // 停止中は進まない
-    expect(time()).toBe("24:55");
+    expect(remaining()).toBe("残り 24:55");
 
     fireEvent.click(screen.getByRole("button", { name: "再開" }));
     act(() => vi.advanceTimersByTime(5_000));
-    expect(time()).toBe("24:50");
+    expect(remaining()).toBe("残り 24:50");
   });
 
   it("リセットで現フェーズの満了値に戻る", () => {
     render(<PomodoroTimer />);
     fireEvent.click(screen.getByRole("button", { name: "開始" }));
     act(() => vi.advanceTimersByTime(30_000));
-    expect(time()).toBe("24:30");
+    expect(remaining()).toBe("残り 24:30");
 
     fireEvent.click(screen.getByRole("button", { name: "リセット" }));
-    expect(time()).toBe("25:00");
+    expect(remaining()).toBe("残り 25:00");
     expect(screen.getByRole("button", { name: "開始" })).toBeInTheDocument();
   });
 
@@ -62,26 +64,27 @@ describe("PomodoroTimer", () => {
     render(<PomodoroTimer />);
     fireEvent.click(screen.getByRole("button", { name: "スキップ" }));
     expect(screen.getByText("小休憩")).toBeInTheDocument();
-    expect(time()).toBe("05:00");
+    expect(remaining()).toBe("残り 05:00");
   });
 
-  it("満了すると次フェーズへ遷移し完了数が増える", () => {
+  it("満了すると次フェーズへ遷移する", () => {
     render(<PomodoroTimer />);
     fireEvent.click(screen.getByRole("button", { name: "開始" }));
     act(() => vi.advanceTimersByTime(25 * 60_000)); // work 満了
 
     expect(screen.getByText("小休憩")).toBeInTheDocument();
-    expect(screen.getByText("完了ポモドーロ: 1")).toBeInTheDocument();
+    expect(remaining()).toBe("残り 05:00");
   });
 
-  it("設定で作業時間を変えると idle 表示に即反映される（#3）", () => {
+  it("設定を開いて作業時間を変えると idle 表示に即反映される", () => {
     render(<PomodoroTimer />);
-    expect(time()).toBe("25:00");
+    expect(remaining()).toBe("残り 25:00");
+    openSettings();
     fireEvent.change(screen.getByLabelText("作業 (分)"), { target: { value: "30" } });
-    expect(time()).toBe("30:00");
+    expect(remaining()).toBe("残り 30:00");
   });
 
-  it("通知が拒否済みなら通知トグルが無効化される（#6）", () => {
+  it("通知が拒否済みなら通知トグルが無効化される", () => {
     vi.stubGlobal(
       "Notification",
       class {
@@ -90,6 +93,7 @@ describe("PomodoroTimer", () => {
       },
     );
     render(<PomodoroTimer />);
+    openSettings();
     expect(screen.getByLabelText("デスクトップ通知")).toBeDisabled();
   });
 });

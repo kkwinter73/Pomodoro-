@@ -25,6 +25,17 @@ describe("useTimer", () => {
     expect(result.current.phase).toBe("work");
     expect(result.current.isIdle).toBe(true);
     expect(result.current.remainingMs).toBe(1 * MIN);
+    expect(result.current.totalMs).toBe(1 * MIN);
+    expect(result.current.progress).toBe(0);
+  });
+
+  it("totalMs / progress が経過に応じて更新される", () => {
+    const { result } = renderHook(() => useTimer(FAST)); // work 1分
+    act(() => result.current.start());
+    act(() => vi.advanceTimersByTime(30_000)); // 半分経過
+    expect(result.current.totalMs).toBe(1 * MIN);
+    expect(result.current.remainingMs).toBe(30_000);
+    expect(result.current.progress).toBeCloseTo(0.5, 5);
   });
 
   it("start 後、時間経過で remainingMs が減る", () => {

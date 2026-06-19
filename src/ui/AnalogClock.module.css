@@ -1,0 +1,35 @@
+.clock {
+  width: min(72vw, 320px);
+  height: auto;
+  display: block;
+}
+
+.face {
+  fill: none;
+  stroke: #111;
+  stroke-width: 1;
+}
+
+/* 画像のような二重円（内側はごく薄く） */
+.faceInner {
+  fill: none;
+  stroke: #111;
+  stroke-width: 0.5;
+  opacity: 0.25;
+}
+
+.numeral {
+  fill: #111;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 13px;
+}
+
+.hand {
+  stroke: #111;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.hub {
+  fill: #111;
+}
