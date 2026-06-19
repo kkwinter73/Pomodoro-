@@ -38,4 +38,17 @@ describe("SettingsPanel", () => {
     fireEvent.click(input("休憩を自動開始"));
     expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ autoStartBreaks: true }));
   });
+
+  it("notificationDisabled で通知トグルが無効化され案内文を表示する", () => {
+    render(
+      <SettingsPanel
+        settings={DEFAULT_SETTINGS}
+        onChange={() => {}}
+        notificationDisabled
+        notificationNote="ブラウザで通知がブロックされています"
+      />,
+    );
+    expect(input("デスクトップ通知")).toBeDisabled();
+    expect(screen.getByText("ブラウザで通知がブロックされています")).toBeInTheDocument();
+  });
 });

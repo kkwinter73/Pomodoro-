@@ -41,10 +41,22 @@
   margin-top: 1rem;
 }
 
+.toggleRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
 .toggle {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   font-size: 0.9rem;
   cursor: pointer;
+}
+
+.note {
+  margin-left: 1.6rem;
+  color: var(--accent, #d24d57);
+  font-size: 0.75rem;
 }
