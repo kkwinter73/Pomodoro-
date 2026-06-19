@@ -28,15 +28,15 @@
 ### ✅ Phase 0 — 基盤（完了）
 ハーネス（CLAUDE.md / docs / .claude hooks）＋ React+TS+Vite 雛形。lint/test/typecheck/dev/build 確認済み。
 
-### Phase 1 — タイマーコア
+### ✅ Phase 1 — タイマーコア（完了）
 | Issue | 内容 | Blocker |
 |---|---|---|
-| [#1](https://github.com/kkwinter73/Pomodoro-/issues/1) | `useTimer` フック（状態機械・タイムスタンプ基準）＋テスト | なし |
+| [#1](https://github.com/kkwinter73/Pomodoro-/issues/1) ✅ | `useTimer` フック（状態機械・タイムスタンプ基準）＋テスト | なし |
 
-### Phase 2 — 表示 UI
+### ✅ Phase 2 — 表示 UI（完了）
 | Issue | 内容 | Blocker |
 |---|---|---|
-| [#2](https://github.com/kkwinter73/Pomodoro-/issues/2) | タイマー表示UI（残り/フェーズ/開始・一時停止・リセット・スキップ） | #1 |
+| [#2](https://github.com/kkwinter73/Pomodoro-/issues/2) ✅ | タイマー表示UI（残り/フェーズ/開始・一時停止・リセット・スキップ） | #1 |
 
 ### Phase 3 — 設定 & 永続化
 | Issue | 内容 | Blocker |
@@ -50,6 +50,14 @@
 | [#5](https://github.com/kkwinter73/Pomodoro-/issues/5) | フェーズ完了時のサウンド | #2, #3 |
 | [#6](https://github.com/kkwinter73/Pomodoro-/issues/6) | デスクトップ通知（Notification API） | #2, #3 |
 
+### Phase 5 — デザイン刷新（仕上げ）
+| Issue | 内容 | Blocker |
+|---|---|---|
+| [#9](https://github.com/kkwinter73/Pomodoro-/issues/9) | デザイン刷新（時計UI／プログレスリング・タイプB）。`useTimer` に progress 追加＋ADR 起票 | #2 |
+
+> 機能コア（#3〜#6）が出揃ってから着手する仕上げ枠。`src/ui/` に閉じる想定。
+> 色/余白程度の軽い調整（タイプA）はこの枠外で随時実施可。
+
 ### Someday（未 Issue 化・要 ADR）
 - ポモドーロ履歴 / 統計ダッシュボード
 - PWA 化・通知の常駐
@@ -57,5 +65,6 @@
 ---
 
 ## 現在地
-**次の着手**: [#1 useTimer](https://github.com/kkwinter73/Pomodoro-/issues/1)（Blocker なし）。
-ブランチ例: `git switch -c feat/use-timer`。
+**完了**: Phase 0（基盤）／#1 useTimer／#2 表示UI。
+**次の着手**: [#4 localStorage 永続化](https://github.com/kkwinter73/Pomodoro-/issues/4)（Blocker #1 解消済み）→ [#3 設定UI](https://github.com/kkwinter73/Pomodoro-/issues/3)。
+ブランチ例: `git switch -c feat/persistence`。
