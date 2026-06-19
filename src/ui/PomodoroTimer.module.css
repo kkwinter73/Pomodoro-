@@ -6,19 +6,23 @@
   color: var(--ink, #1c1814);
 }
 
-/* フェーズ名：トラッキングを効かせた小さめの見出し */
+/* フェーズ名：トラッキングを効かせた小さめの見出し
+   ※ letter-spacing 使用時は text-indent で相殺しない（末尾字間は詰められ右にずれるため）。
+   代わりに負の右マージンで末尾の字間を打ち消し、グリフを正確に中央へ。 */
 .phase {
   margin: 0;
+  margin-right: -0.55em;
   font-family: var(--font-display, serif);
   font-size: 1.5rem;
   font-weight: 600;
   letter-spacing: 0.55em;
-  text-indent: 0.55em;
   color: var(--ink, #1c1814);
 }
 
 .controls {
   display: flex;
+  justify-content: center;
+  width: 100%;
   gap: 2rem;
   align-items: baseline;
 }
@@ -31,11 +35,12 @@
   font-family: var(--font-ui, sans-serif);
   font-size: 0.72rem;
   font-weight: 500;
-  letter-spacing: 0.28em;
-  text-indent: 0.28em;
+  letter-spacing: 0.24em;
+  margin-right: -0.24em; /* 末尾の字間を打ち消してグリフを中央に */
   text-transform: uppercase;
   color: var(--ink, #1c1814);
   cursor: pointer;
+  text-align: center;
   transition:
     opacity 0.15s ease,
     transform 0.08s ease;
@@ -81,7 +86,7 @@
   font-family: var(--font-ui, sans-serif);
   font-size: 0.66rem;
   letter-spacing: 0.32em;
-  text-indent: 0.32em;
+  margin-right: -0.32em; /* 末尾の字間を打ち消して中央に */
   text-transform: uppercase;
   color: var(--muted, #6f6655);
   cursor: pointer;
