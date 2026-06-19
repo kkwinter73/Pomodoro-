@@ -120,6 +120,25 @@ describe("useTimer 永続化（#4）", () => {
   });
 });
 
+describe("useTimer onPhaseComplete（#5）", () => {
+  it("満了時に完了フェーズ名で1回だけ呼ばれる", () => {
+    const spy = vi.fn();
+    const { result } = renderHook(() => useTimer(FAST, { onPhaseComplete: spy }));
+    act(() => result.current.start());
+    act(() => vi.advanceTimersByTime(1 * MIN));
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith("work");
+  });
+
+  it("skip / reset では呼ばれない", () => {
+    const spy = vi.fn();
+    const { result } = renderHook(() => useTimer(FAST, { onPhaseComplete: spy }));
+    act(() => result.current.skip());
+    act(() => result.current.reset());
+    expect(spy).not.toHaveBeenCalled();
+  });
+});
+
 describe("useTimer 設定変更の反映（#3）", () => {
   it("idle 中に設定を変えると残り時間が新しい満了値になる", () => {
     const { result, rerender } = renderHook(({ s }) => useTimer(s), { initialProps: { s: FAST } });
