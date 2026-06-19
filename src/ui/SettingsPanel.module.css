@@ -1,48 +1,59 @@
 .panel {
   width: 100%;
   max-width: 340px;
-  padding: 1rem 1.25rem;
-  border: 1px solid var(--border, #ddd);
-  border-radius: 4px;
-  background: var(--surface, #fff);
+  padding: 1.25rem 1.4rem;
+  border: 1px solid var(--line, #d8cfba);
+  border-radius: 6px;
+  background: var(--card, #faf6ec);
+  box-shadow: 0 10px 24px rgba(40, 30, 12, 0.08);
 }
 
 .heading {
-  margin: 0 0 0.9rem;
-  font-size: 0.85rem;
-  letter-spacing: 0.2em;
-  color: var(--muted, #666);
-  font-weight: 400;
+  margin: 0 0 1rem;
+  font-family: var(--font-ui, sans-serif);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--muted, #6f6655);
 }
 
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.6rem 1rem;
+  gap: 0.7rem 1rem;
 }
 
 .field {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
-  font-size: 0.8rem;
-  color: var(--muted, #666);
+  gap: 0.25rem;
+  font-family: var(--font-ui, sans-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--muted, #6f6655);
 }
 
 .field input {
-  padding: 0.35rem 0.45rem;
-  border: 1px solid var(--border, #ddd);
-  border-radius: 3px;
-  font-size: 0.95rem;
-  font-family: inherit;
-  color: var(--ink, #111);
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--line, #d8cfba);
+  border-radius: 4px;
+  background: #fffdf7;
+  font-size: 1rem;
+  font-family: var(--font-display, serif);
+  color: var(--ink, #1c1814);
+}
+
+.field input:focus {
+  outline: none;
+  border-color: var(--ink, #1c1814);
 }
 
 .toggles {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  margin-top: 0.9rem;
+  gap: 0.55rem;
+  margin-top: 1rem;
 }
 
 .toggleRow {
@@ -54,14 +65,20 @@
 .toggle {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.85rem;
-  color: var(--ink, #111);
+  gap: 0.55rem;
+  font-family: var(--font-ui, sans-serif);
+  font-size: 0.82rem;
+  color: var(--ink, #1c1814);
   cursor: pointer;
 }
 
+.toggle input {
+  accent-color: var(--ink, #1c1814);
+}
+
 .note {
-  margin-left: 1.6rem;
-  color: var(--muted, #666);
-  font-size: 0.7rem;
+  margin-left: 1.7rem;
+  font-family: var(--font-ui, sans-serif);
+  color: var(--muted, #6f6655);
+  font-size: 0.68rem;
 }
