@@ -21,20 +21,47 @@
 }
 
 .controls button {
+  position: relative;
   background: none;
   border: none;
   padding: 0.25rem 0.25rem;
   font-size: 0.95rem;
+  font-family: inherit;
   color: #111;
   cursor: pointer;
+  transition:
+    opacity 0.15s ease,
+    transform 0.08s ease;
 }
 
 .controls button:hover {
-  opacity: 0.6;
+  opacity: 0.55;
+}
+
+.controls button:active {
+  transform: translateY(1px) scale(0.97);
 }
 
 .primary {
   font-weight: 600;
+}
+
+/* 主ボタンはホバーで下線がすっと伸びる */
+.primary::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: #111;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.primary:hover::after {
+  transform: scaleX(1);
 }
 
 .ghost {

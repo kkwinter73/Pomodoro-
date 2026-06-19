@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { AnalogClock } from "./AnalogClock";
 
-const hand = () => screen.getByTestId("clock-hand").getAttribute("transform");
+const hand = () => screen.getByTestId("clock-hand").getAttribute("data-angle");
 
 describe("AnalogClock", () => {
   it("残り時間を aria-label で公開する（数字は視覚表示しない）", () => {
@@ -18,17 +18,17 @@ describe("AnalogClock", () => {
 
   it("針は経過割合に応じて時計回りに回る", () => {
     const { rerender } = render(<AnalogClock progress={0} remainingMs={0} />);
-    expect(hand()).toBe("rotate(0 100 100)");
+    expect(hand()).toBe("0");
     rerender(<AnalogClock progress={0.25} remainingMs={0} />);
-    expect(hand()).toBe("rotate(90 100 100)");
+    expect(hand()).toBe("90");
     rerender(<AnalogClock progress={0.5} remainingMs={0} />);
-    expect(hand()).toBe("rotate(180 100 100)");
+    expect(hand()).toBe("180");
   });
 
   it("progress は 0..1 にクランプされる", () => {
     const { rerender } = render(<AnalogClock progress={1.5} remainingMs={0} />);
-    expect(hand()).toBe("rotate(360 100 100)");
+    expect(hand()).toBe("360");
     rerender(<AnalogClock progress={-1} remainingMs={0} />);
-    expect(hand()).toBe("rotate(0 100 100)");
+    expect(hand()).toBe("0");
   });
 });
