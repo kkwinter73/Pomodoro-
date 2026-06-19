@@ -72,7 +72,11 @@ export function PomodoroTimer() {
     <div className={styles.wrapper} data-phase={timer.phase}>
       <p className={styles.phase}>{PHASE_LABEL[timer.phase]}</p>
 
-      <AnalogClock progress={timer.progress} remainingMs={timer.remainingMs} />
+      <AnalogClock
+        progress={timer.progress}
+        remainingMs={timer.remainingMs}
+        running={timer.isRunning}
+      />
 
       <div className={styles.controls}>
         <button type="button" className={styles.primary} onClick={primary.onClick}>
