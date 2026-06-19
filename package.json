@@ -11,7 +11,7 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc -b",
     "gen:decisions": "node scripts/gen-decisions-index.mjs"
   },
   "dependencies": {
