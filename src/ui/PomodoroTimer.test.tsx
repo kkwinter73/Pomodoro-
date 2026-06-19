@@ -3,12 +3,14 @@ import { render, screen, fireEvent, act } from "@testing-library/react";
 import { PomodoroTimer } from "./PomodoroTimer";
 
 beforeEach(() => {
+  localStorage.clear();
   vi.useFakeTimers();
   vi.setSystemTime(0);
 });
 
 afterEach(() => {
   vi.useRealTimers();
+  localStorage.clear();
 });
 
 const time = () => screen.getByRole("timer").textContent;

@@ -1,4 +1,5 @@
-import { useTimer } from "../timer";
+import { useState } from "react";
+import { useTimer, loadSettings, DEFAULT_SETTINGS } from "../timer";
 import type { Phase } from "../timer";
 import { formatTime } from "./formatTime";
 import styles from "./PomodoroTimer.module.css";
@@ -10,7 +11,9 @@ const PHASE_LABEL: Record<Phase, string> = {
 };
 
 export function PomodoroTimer() {
-  const timer = useTimer();
+  // 永続化された設定を初回に復元する。設定の編集UIは #3 で追加予定。
+  const [settings] = useState(() => loadSettings() ?? DEFAULT_SETTINGS);
+  const timer = useTimer(settings);
 
   // 主ボタンは状態に応じて 開始 / 一時停止 / 再開 を切り替える
   const primary = timer.isRunning

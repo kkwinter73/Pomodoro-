@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { DEFAULT_SETTINGS } from "./types";
 import type { Phase, Settings, Status } from "./types";
 import * as core from "./timerCore";
+import { loadState, saveState, saveSettings } from "./storage";
 
 const TICK_MS = 250;
 
@@ -29,8 +30,21 @@ export interface UseTimerResult {
  * インターバルが張り直される）。設定の管理は #3 で行う。
  */
 export function useTimer(settings: Settings = DEFAULT_SETTINGS): UseTimerResult {
-  const [state, setState] = useState(() => core.initialState(settings));
+  const [state, setState] = useState(() => {
+    // 永続化された状態を復元。running 中に経過していれば now で完了処理を適用する
+    // （tick は未満了なら無変化 / ADR 0003・docs/design Persistence 節）。
+    const base = loadState() ?? core.initialState(settings);
+    return core.tick(base, settings, Date.now());
+  });
   const [now, setNow] = useState(() => Date.now());
+
+  // 状態・設定の変化を localStorage に保存する
+  useEffect(() => {
+    saveState(state);
+  }, [state]);
+  useEffect(() => {
+    saveSettings(settings);
+  }, [settings]);
 
   // running の間だけインターバルを回す。完了したら次フェーズへ遷移し、
   // running 以外になればクリーンアップで停止する。

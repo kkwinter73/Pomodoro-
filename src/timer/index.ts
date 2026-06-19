@@ -3,3 +3,11 @@ export { useTimer } from "./useTimer";
 export type { UseTimerResult } from "./useTimer";
 export { DEFAULT_SETTINGS } from "./types";
 export type { Phase, Status, Settings, TimerState } from "./types";
+export {
+  loadState,
+  saveState,
+  loadSettings,
+  saveSettings,
+  clearPersisted,
+  STORAGE_KEYS,
+} from "./storage";
