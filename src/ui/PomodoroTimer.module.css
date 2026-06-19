@@ -19,16 +19,18 @@
   color: var(--ink, #1c1814);
 }
 
+/* 3カラム（1fr auto 1fr）。中央のリセットを必ず中心に、左右を対称に置く。
+   左ボタンは 開始/一時停止/再開 で幅が変わるが、対称性は崩れない。 */
 .controls {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  gap: 2rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: baseline;
+  width: min(74vw, 340px);
 }
 
 .controls button {
   position: relative;
+  justify-self: center;
   background: none;
   border: none;
   padding: 0.2rem 0.1rem;
