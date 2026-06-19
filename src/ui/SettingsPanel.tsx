@@ -5,9 +5,18 @@ import styles from "./SettingsPanel.module.css";
 interface Props {
   settings: Settings;
   onChange: (settings: Settings) => void;
+  /** 通知トグルを無効化する（権限拒否・非対応時） */
+  notificationDisabled?: boolean;
+  /** 通知トグルに添える案内文 */
+  notificationNote?: string;
 }
 
-export function SettingsPanel({ settings, onChange }: Props) {
+export function SettingsPanel({
+  settings,
+  onChange,
+  notificationDisabled = false,
+  notificationNote,
+}: Props) {
   const setField = <K extends keyof Settings>(key: K, value: Settings[K]) =>
     onChange({ ...settings, [key]: value });
 
@@ -31,16 +40,26 @@ export function SettingsPanel({ settings, onChange }: Props) {
       </div>
 
       <div className={styles.toggles}>
-        {TOGGLE_FIELDS.map((f) => (
-          <label key={f.key} className={styles.toggle}>
-            <input
-              type="checkbox"
-              checked={settings[f.key]}
-              onChange={(e) => setField(f.key, e.target.checked)}
-            />
-            <span>{f.label}</span>
-          </label>
-        ))}
+        {TOGGLE_FIELDS.map((f) => {
+          const isNotification = f.key === "notificationsEnabled";
+          const disabled = isNotification && notificationDisabled;
+          return (
+            <div key={f.key} className={styles.toggleRow}>
+              <label className={styles.toggle}>
+                <input
+                  type="checkbox"
+                  checked={settings[f.key]}
+                  disabled={disabled}
+                  onChange={(e) => setField(f.key, e.target.checked)}
+                />
+                <span>{f.label}</span>
+              </label>
+              {isNotification && notificationNote ? (
+                <small className={styles.note}>{notificationNote}</small>
+              ) : null}
+            </div>
+          );
+        })}
       </div>
     </section>
   );

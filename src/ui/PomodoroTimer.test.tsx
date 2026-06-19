@@ -10,6 +10,7 @@ beforeEach(() => {
 
 afterEach(() => {
   vi.useRealTimers();
+  vi.unstubAllGlobals();
   localStorage.clear();
 });
 
@@ -78,5 +79,17 @@ describe("PomodoroTimer", () => {
     expect(time()).toBe("25:00");
     fireEvent.change(screen.getByLabelText("作業 (分)"), { target: { value: "30" } });
     expect(time()).toBe("30:00");
+  });
+
+  it("通知が拒否済みなら通知トグルが無効化される（#6）", () => {
+    vi.stubGlobal(
+      "Notification",
+      class {
+        static permission: NotificationPermission = "denied";
+        static requestPermission = vi.fn(async () => "denied" as NotificationPermission);
+      },
+    );
+    render(<PomodoroTimer />);
+    expect(screen.getByLabelText("デスクトップ通知")).toBeDisabled();
   });
 });
