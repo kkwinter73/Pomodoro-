@@ -1,12 +1,17 @@
 // React フック。state 保持と表示更新インターバルだけを担い、時間計算は timerCore に委譲する。
 // 時間の真実源は Date.now()。setInterval は ~250ms の再描画/完了検知トリガのみ（ADR 0003）。
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { DEFAULT_SETTINGS } from "./types";
 import type { Phase, Settings, Status } from "./types";
 import * as core from "./timerCore";
 import { loadState, saveState, saveSettings } from "./storage";
 
 const TICK_MS = 250;
+
+export interface UseTimerOptions {
+  /** tick による完了時のみ発火（skip / reset では呼ばれない）。引数は完了したフェーズ。 */
+  onPhaseComplete?: (completedPhase: Phase) => void;
+}
 
 export interface UseTimerResult {
   phase: Phase;
@@ -29,7 +34,10 @@ export interface UseTimerResult {
  * 注意: settings は安定参照を渡すこと（毎レンダーで新規オブジェクトを渡すと
  * インターバルが張り直される）。設定の管理は #3 で行う。
  */
-export function useTimer(settings: Settings = DEFAULT_SETTINGS): UseTimerResult {
+export function useTimer(
+  settings: Settings = DEFAULT_SETTINGS,
+  options: UseTimerOptions = {},
+): UseTimerResult {
   const [state, setState] = useState(() => {
     // 永続化された状態を復元。running 中に経過していれば now で完了処理を適用する
     // （tick は未満了なら無変化 / ADR 0003・docs/design Persistence 節）。
@@ -37,6 +45,12 @@ export function useTimer(settings: Settings = DEFAULT_SETTINGS): UseTimerResult 
     return core.tick(base, settings, Date.now());
   });
   const [now, setNow] = useState(() => Date.now());
+
+  // 最新の state とコールバックを ref で保持（インターバルの stale closure を避ける）
+  const stateRef = useRef(state);
+  stateRef.current = state;
+  const onCompleteRef = useRef(options.onPhaseComplete);
+  onCompleteRef.current = options.onPhaseComplete;
 
   // 状態・設定の変化を localStorage に保存する
   useEffect(() => {
@@ -61,9 +75,17 @@ export function useTimer(settings: Settings = DEFAULT_SETTINGS): UseTimerResult 
     if (state.status !== "running") return;
     const id = setInterval(() => {
       const t = Date.now();
-      // tick は未完了なら同一参照を返すため、その場合 React は再描画をスキップする。
-      setState((prev) => core.tick(prev, settings, t));
-      setNow(t);
+      const prev = stateRef.current;
+      const next = core.tick(prev, settings, t);
+      if (next !== prev) {
+        // フェーズ完了。状態を進め、完了したフェーズを通知する。
+        stateRef.current = next;
+        setState(next);
+        onCompleteRef.current?.(prev.phase);
+      } else {
+        // 未完了は表示更新のみ（now を進めて残り時間を再計算させる）。
+        setNow(t);
+      }
     }, TICK_MS);
     return () => clearInterval(id);
   }, [state.status, settings]);
