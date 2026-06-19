@@ -1,19 +1,22 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { act, renderHook } from "@testing-library/react";
-import { DEFAULT_SETTINGS, type Settings } from "./types";
+import { DEFAULT_SETTINGS, type Settings, type TimerState } from "./types";
 import { useTimer } from "./useTimer";
+import { loadState, saveState } from "./storage";
 
 // 短い満了時間で完了まで素早く検証する（安定参照で渡す）
 const FAST: Settings = { ...DEFAULT_SETTINGS, workMin: 1, shortBreakMin: 1 };
 const MIN = 60_000;
 
 beforeEach(() => {
+  localStorage.clear(); // 永続化の影響を遮断
   vi.useFakeTimers();
   vi.setSystemTime(0);
 });
 
 afterEach(() => {
   vi.useRealTimers();
+  localStorage.clear();
 });
 
 describe("useTimer", () => {
@@ -72,5 +75,47 @@ describe("useTimer", () => {
 
     expect(result.current.phase).toBe("shortBreak");
     expect(result.current.isRunning).toBe(true);
+  });
+});
+
+describe("useTimer 永続化（#4）", () => {
+  it("開始後の状態が localStorage に保存される", () => {
+    const { result } = renderHook(() => useTimer(FAST));
+    act(() => result.current.start());
+
+    const saved = loadState();
+    expect(saved?.status).toBe("running");
+    expect(saved?.endAt).toBe(1 * MIN); // systemTime 0 + 1分
+  });
+
+  it("保存された running 状態を復元し、未満了なら残りを再計算する", () => {
+    const seeded: TimerState = {
+      phase: "work",
+      status: "running",
+      endAt: 30_000, // systemTime 0 から 30秒後
+      remainingMs: 0,
+      completedPomodoros: 0,
+    };
+    saveState(seeded);
+
+    const { result } = renderHook(() => useTimer(FAST));
+    expect(result.current.isRunning).toBe(true);
+    expect(result.current.remainingMs).toBe(30_000);
+  });
+
+  it("復元時に既に満了していれば完了処理を適用して次フェーズへ", () => {
+    const expired: TimerState = {
+      phase: "work",
+      status: "running",
+      endAt: -1, // 既に過去
+      remainingMs: 0,
+      completedPomodoros: 0,
+    };
+    saveState(expired);
+
+    const { result } = renderHook(() => useTimer(FAST)); // autoStart off
+    expect(result.current.phase).toBe("shortBreak");
+    expect(result.current.isIdle).toBe(true);
+    expect(result.current.completedPomodoros).toBe(1);
   });
 });
