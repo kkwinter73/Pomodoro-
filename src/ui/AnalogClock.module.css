@@ -1,31 +1,48 @@
 .clock {
-  width: min(72vw, 320px);
+  width: min(74vw, 340px);
   height: auto;
   display: block;
-  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0 14px 28px rgba(40, 30, 12, 0.18));
 }
 
-.face {
-  fill: #fff;
-  stroke: #111;
-  stroke-width: 1;
+.bezel {
+  fill: #1c1814;
 }
 
-/* 二重円（内側はごく薄く） */
-.faceInner {
+.dial {
+  fill: url(#dialFace);
+}
+
+/* 文字盤の内縁を細く締める */
+.dialRing {
   fill: none;
-  stroke: #111;
+  stroke: #1c1814;
+  stroke-width: 0.6;
+  opacity: 0.35;
+}
+
+.tickMinor {
+  stroke: #1c1814;
   stroke-width: 0.5;
-  opacity: 0.25;
+  opacity: 0.4;
+}
+
+.tickMajor {
+  stroke: #1c1814;
+  stroke-width: 1.2;
+  opacity: 0.8;
+  stroke-linecap: round;
 }
 
 .numeral {
-  fill: #111;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 13px;
+  fill: #1c1814;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
-/* 針：CSS でなめらかに運針（250ms ごとの更新を補間） */
+/* 針：CSS でなめらかに運針（250ms 更新を補間） */
 .handGroup {
   transform-box: view-box;
   transform-origin: 100px 100px;
@@ -33,13 +50,29 @@
 }
 
 .hand {
-  stroke: #111;
-  stroke-width: 2;
+  fill: #1c1814;
+}
+
+.handTail {
+  stroke: #1c1814;
+  stroke-width: 2.5;
   stroke-linecap: round;
 }
 
+.counterweight {
+  fill: #1c1814;
+}
+
+.hubRing {
+  fill: none;
+  stroke: #1c1814;
+  stroke-width: 1.5;
+}
+
 .hub {
-  fill: #111;
+  fill: #faf6ec;
+  stroke: #1c1814;
+  stroke-width: 1;
 }
 
 /* 振り子：計測中だけ swing でチクタク揺れる */
@@ -49,33 +82,37 @@
 }
 
 .rod {
-  stroke: #111;
+  stroke: #1c1814;
   stroke-width: 1;
-  opacity: 0.55;
+  opacity: 0.5;
 }
 
 .bob {
-  fill: #fff;
-  stroke: #111;
+  fill: #ece2cd;
+  stroke: #1c1814;
   stroke-width: 1.5;
-  opacity: 0.7;
+  opacity: 0.85;
+}
+
+.bobDot {
+  fill: #1c1814;
+  opacity: 0.6;
 }
 
 .swing {
-  animation: swing 2.4s ease-in-out infinite;
+  animation: swing 2.6s ease-in-out infinite;
 }
 
 @keyframes swing {
   0%,
   100% {
-    transform: rotate(-11deg);
+    transform: rotate(-10deg);
   }
   50% {
-    transform: rotate(11deg);
+    transform: rotate(10deg);
   }
 }
 
-/* 動きを控えたい利用者の設定を尊重 */
 @media (prefers-reduced-motion: reduce) {
   .handGroup {
     transition: none;
