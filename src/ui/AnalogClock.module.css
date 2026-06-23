@@ -2,11 +2,12 @@
   width: min(74vw, 340px);
   height: auto;
   display: block;
-  filter: drop-shadow(0 14px 28px rgba(40, 30, 12, 0.18));
+  /* ニュートラルで控えめな影（暖色感を排した編集的な白黒） */
+  filter: drop-shadow(0 10px 26px rgba(0, 0, 0, 0.09));
 }
 
 .bezel {
-  fill: #1c1814;
+  fill: #0d0d0d;
 }
 
 .dial {
@@ -16,26 +17,26 @@
 /* 文字盤の内縁を細く締める */
 .dialRing {
   fill: none;
-  stroke: #1c1814;
+  stroke: #0d0d0d;
   stroke-width: 0.6;
-  opacity: 0.35;
+  opacity: 0.3;
 }
 
 .tickMinor {
-  stroke: #1c1814;
+  stroke: #0d0d0d;
   stroke-width: 0.5;
-  opacity: 0.4;
+  opacity: 0.35;
 }
 
 .tickMajor {
-  stroke: #1c1814;
+  stroke: #0d0d0d;
   stroke-width: 1.2;
-  opacity: 0.8;
+  opacity: 0.85;
   stroke-linecap: round;
 }
 
 .numeral {
-  fill: #1c1814;
+  fill: #0d0d0d;
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 16px;
   font-weight: 600;
@@ -50,28 +51,28 @@
 }
 
 .hand {
-  fill: #1c1814;
+  fill: #0d0d0d;
 }
 
 .handTail {
-  stroke: #1c1814;
+  stroke: #0d0d0d;
   stroke-width: 2.5;
   stroke-linecap: round;
 }
 
 .counterweight {
-  fill: #1c1814;
+  fill: #0d0d0d;
 }
 
 .hubRing {
   fill: none;
-  stroke: #1c1814;
+  stroke: #0d0d0d;
   stroke-width: 1.5;
 }
 
 .hub {
-  fill: #faf6ec;
-  stroke: #1c1814;
+  fill: #ffffff;
+  stroke: #0d0d0d;
   stroke-width: 1;
 }
 
@@ -82,21 +83,21 @@
 }
 
 .rod {
-  stroke: #1c1814;
+  stroke: #0d0d0d;
   stroke-width: 1;
-  opacity: 0.5;
+  opacity: 0.45;
 }
 
 .bob {
-  fill: #ece2cd;
-  stroke: #1c1814;
+  fill: #f1f1f2;
+  stroke: #0d0d0d;
   stroke-width: 1.5;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 .bobDot {
-  fill: #1c1814;
-  opacity: 0.6;
+  fill: #0d0d0d;
+  opacity: 0.55;
 }
 
 .swing {

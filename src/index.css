@@ -1,9 +1,9 @@
 :root {
-  --ink: #1c1814;
-  --muted: #6f6655;
-  --line: #d8cfba;
-  --paper: #f3ecdc;
-  --card: #faf6ec;
+  --ink: #0d0d0d;
+  --muted: #9a9a9a;
+  --line: #e6e6e6;
+  --paper: #ffffff;
+  --card: #ffffff;
   --font-display: "Cormorant Garamond", Georgia, serif;
   --font-ui: "Inter", system-ui, -apple-system, sans-serif;
   font-family: var(--font-ui);
@@ -17,8 +17,8 @@
 body {
   margin: 0;
   min-height: 100vh;
-  /* 紙のようなやわらかい暖色グラデ */
-  background: radial-gradient(120% 120% at 50% 0%, #f7f1e4 0%, #ece2cd 100%);
+  /* クールでクリスプな白（ごく淡いニュートラルのみ） */
+  background: radial-gradient(120% 120% at 50% 0%, #ffffff 0%, #f3f3f4 100%);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
