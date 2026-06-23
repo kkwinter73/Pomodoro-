@@ -43,8 +43,8 @@ export function AnalogClock({ progress, remainingMs, running = false }: Props) {
     >
       <defs>
         <radialGradient id="dialFace" cx="50%" cy="40%" r="68%">
-          <stop offset="0%" stopColor="#faf6ec" />
-          <stop offset="100%" stopColor="#ece2cd" />
+          <stop offset="0%" stopColor="#ffffff" />
+          <stop offset="100%" stopColor="#f1f1f2" />
         </radialGradient>
       </defs>
 

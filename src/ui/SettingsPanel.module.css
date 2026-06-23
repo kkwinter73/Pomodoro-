@@ -2,10 +2,10 @@
   width: 100%;
   max-width: 340px;
   padding: 1.25rem 1.4rem;
-  border: 1px solid var(--line, #d8cfba);
+  border: 1px solid var(--line, #e6e6e6);
   border-radius: 6px;
-  background: var(--card, #faf6ec);
-  box-shadow: 0 10px 24px rgba(40, 30, 12, 0.08);
+  background: var(--card, #ffffff);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.07);
 }
 
 .heading {
@@ -15,7 +15,7 @@
   font-weight: 500;
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: var(--muted, #6f6655);
+  color: var(--muted, #9a9a9a);
 }
 
 .grid {
@@ -31,22 +31,22 @@
   font-family: var(--font-ui, sans-serif);
   font-size: 0.72rem;
   letter-spacing: 0.04em;
-  color: var(--muted, #6f6655);
+  color: var(--muted, #9a9a9a);
 }
 
 .field input {
   padding: 0.4rem 0.5rem;
-  border: 1px solid var(--line, #d8cfba);
+  border: 1px solid var(--line, #e6e6e6);
   border-radius: 4px;
-  background: #fffdf7;
+  background: #ffffff;
   font-size: 1rem;
   font-family: var(--font-display, serif);
-  color: var(--ink, #1c1814);
+  color: var(--ink, #0d0d0d);
 }
 
 .field input:focus {
   outline: none;
-  border-color: var(--ink, #1c1814);
+  border-color: var(--ink, #0d0d0d);
 }
 
 .toggles {
@@ -68,17 +68,17 @@
   gap: 0.55rem;
   font-family: var(--font-ui, sans-serif);
   font-size: 0.82rem;
-  color: var(--ink, #1c1814);
+  color: var(--ink, #0d0d0d);
   cursor: pointer;
 }
 
 .toggle input {
-  accent-color: var(--ink, #1c1814);
+  accent-color: var(--ink, #0d0d0d);
 }
 
 .note {
   margin-left: 1.7rem;
   font-family: var(--font-ui, sans-serif);
-  color: var(--muted, #6f6655);
+  color: var(--muted, #9a9a9a);
   font-size: 0.68rem;
 }
